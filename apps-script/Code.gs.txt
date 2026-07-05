@@ -1,0 +1,22 @@
+function doGet(e) {
+
+  const sheet = SpreadsheetApp
+    .getActiveSpreadsheet()
+    .getSheetByName("Motion_Log");
+
+  if (!sheet) {
+    return ContentService
+      .createTextOutput("ERROR: Sheet 'Motion_Log' not found");
+  }
+
+  sheet.appendRow([
+    new Date(),
+    e.parameter.activity || "",
+    e.parameter.state || "",
+    e.parameter.event || ""
+  ]);
+
+  return ContentService
+    .createTextOutput("OK")
+    .setMimeType(ContentService.MimeType.TEXT);
+}
